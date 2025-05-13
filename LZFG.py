@@ -135,7 +135,7 @@ def print_table(steps, total_cost):
 
 if __name__ == "__main__":
     # Тестовое кодовое слово
-    text = "IF_WE_CANNOT_DO_AS_WE_WOULD_WE_SHOULD_DO_AS_WE_CAN"
-    #text = "EARLY_TO_BED_AND_EARLY_TO_RISE_MAKES_A_MAN_WISE"
+    text = "IF_WE_CANNOT_DO_AS_WE_WOULD_WE_SHOULD_DO_AS_WE_CAN_EARLY_TO_BED_AND_EARLY_TO_RISE_MAKES_A_MAN_WISE_IF_WE_CANNOT_DO_AS_WE_WOULD_WE_SHOULD_DO_AS_WE_CAN_EARLY_TO_BED_AND_EARLY_TO_RISE_MAKES_A_MAN_WISE"
+    text1 = "EARLY_TO_BED_AND_EARLY_TO_RISE_MAKES_A_MAN_WISE"
     steps, total_cost = compress_LZFG(text)
     print_table(steps, total_cost)

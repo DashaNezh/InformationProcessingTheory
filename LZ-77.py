@@ -50,18 +50,27 @@ class LZ77:
     def print_encoded_data(self, encoded_data):
         from math import log2, ceil
 
-        def unar(n):
-            return '1' * (n - 1) + '0'
-
         def bin_str(n):
-            return bin(n)[3:]
+            return bin(n)[3:]  # binary(n) без ведущей '1'.
 
-        def mon(i):
-            return unar(len(bin_str(i)) + 1) + bin_str(i)
+        def second(l):
+            return bin(l)[3:]  # binary(l) без ведущей '1'.
+
+        def unar(k):
+            return '1' * k + '0'  # Ровно k единиц и ноль.
+
+        def elias(i):
+            if i == 1:
+                return '0'
+            third_part = bin_str(i)
+            second_part = second(len(third_part))
+            unary_part = unar(len(second_part) + 1)  # Исправлено: +1 вместо +2!
+            return unary_part + second_part + third_part
 
         print(
             "| ШАГ  | ФЛАГ | ПОСЛЕДОВАТЕЛЬНОСТЬ БУКВ | РАССТОЯНИЕ (d) | ДЛИНА (l) | КОДОВАЯ ПОСЛЕДОВАТЕЛЬНОСТЬ | БИТЫ  |")
         print("-" * 107)
+        print(elias(21))
 
         total_len = sum(len(seq) if flag else 1 for seq, flag, *_ in encoded_data)
         lookahead_remaining = total_len
@@ -79,7 +88,7 @@ class LZ77:
                 if length == 1:
                     length_bin = '0'
                 else:
-                    length_bin = mon(length)
+                    length_bin = elias(length)
                 length_bits = len(length_bin)
                 code_str = f"1 {offset_bin} {length_bin}"
                 bits = 1 + offset_bits + length_bits
@@ -99,5 +108,6 @@ if __name__ == "__main__":
     lz77 = LZ77(window_size=64)
     encoded = lz77.encode(input_text)
     lz77.print_encoded_data(encoded)
+
 
 
